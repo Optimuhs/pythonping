@@ -1,7 +1,7 @@
 import sys
-from random import randint
 from . import network, executor, payload_provider
 from .utils import random_text
+import secrets
 
 
 # this needs to be available across all thread usages and will hold ints
@@ -72,7 +72,7 @@ def ping(target,
     # no need to protect this loop as no one will ever surpass 0xFFFF amount of threads
     while True:
         # seed_id needs to be less than or equal to 65535 (as original code was seed_id = getpid() & 0xFFFF)
-        seed_id = randint(0x1, 0xFFFF)
+        seed_id = secrets.SystemRandom().randint(0x1, 0xFFFF)
         if seed_id not in SEED_IDs:
             SEED_IDs.append(seed_id)
             break
